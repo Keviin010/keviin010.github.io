@@ -1,0 +1,49 @@
+/* Fondo con movimiento suave: dos manchas de luz que se mueven muy despacio */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(4, 180, 224, 0.22), transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(4, 180, 224, 0.15), transparent 45%);
+    animation: moverFondo 40s ease-in-out infinite alternate;
+}
+
+@keyframes moverFondo {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-6%, 4%) scale(1.15); }
+}
+
+/* Si la persona prefiere menos movimiento, el fondo se queda quieto */
+@media (prefers-reduced-motion: reduce) {
+    body::before { animation: none; }
+}
+
+.project-card__badge{margin-left:1rem;padding:.2rem 1rem;border:1px solid var(--color-secondary);border-radius:99px;font-size:1.2rem;font-weight:600;color:var(--color-secondary)}
+
+/* Página de inicio */
+.home { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 1.6rem; padding: 6rem; padding-right: 3rem; }
+@media (max-width: 600px) { .home { padding: 3rem 2rem; } }
+.home__hello { font-size: 1.8rem; color: var(--color-subtitles); }
+.home__title { font-size: clamp(3.6rem, 8vw, 6.4rem); line-height: 1.1; }
+.home__role { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 500; }
+.home__text { max-width: 60rem; font-size: 1.6rem; line-height: 1.7; color: var(--color-subtitles); }
+.home__buttons { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 1rem; }
+.home__btn { padding: 1.1rem 2.4rem; border-radius: 99px; border: 2px solid var(--color-secondary); background: var(--color-secondary); color: #fff; font-size: 1.4rem; font-weight: 600; transition: transform 200ms ease; }
+.home__btn--outline { background: transparent; color: var(--color-secondary); }
+.home__btn:hover { transform: translateY(-2px); }
+.home__facts { display: flex; flex-wrap: wrap; gap: 1rem 3rem; margin-top: 1rem; font-size: 1.4rem; }
+.home__facts strong { display: block; color: var(--color-secondary); }
+
+/* Tarjeta de datos en Sobre mí, para llenar la columna derecha */
+.personal-info__data { align-self: flex-start; padding: 2rem; border: 2px solid var(--color-border-reviews); border-radius: 1.5rem; }
+
+.personal-info__mail { color: var(--color-secondary); font-size: 2rem; }
+
+/* Vista previa del demo dentro de la tarjeta de proyecto */
+.project-card__preview { position: relative; display: block; margin-bottom: 1.8rem; overflow: hidden; border: 2px solid var(--color-border-reviews); border-radius: 1rem; background: var(--color-background-certificate); }
+.project-card__preview img { display: block; width: 100%; height: auto; transition: transform 300ms ease; }
+.project-card__preview:hover img { transform: scale(1.02); }
+.project-card__preview-label { position: absolute; right: 1rem; bottom: 1rem; display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.6rem 1.4rem; border-radius: 99px; background: var(--color-secondary); color: #fff; font-size: 1.3rem; font-weight: 600; }
