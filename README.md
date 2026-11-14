@@ -1,6 +1,6 @@
 # Portafolio · Kevin Royo
 
-Portafolio personal de desarrollo de software, enfocado en backend con Java y Spring Boot.
+Portafolio personal de desarrollo de software
 
 **Sitio en vivo:** https://keviin010.github.io
 
