@@ -1,30 +1,57 @@
-// Abre y cierra el menú lateral en pantallas pequeñas
 function iniciarMenu() {
     var boton = document.querySelector(".layout__menu-toggle");
     var menu = document.querySelector(".layout__aside");
-    var iconoBarras = document.querySelector(".layout__menu-toggle .fa-bars");
-    var iconoCerrar = document.querySelector(".layout__menu-toggle .fa-xmark");
+    var pantallaGrande = window.matchMedia("(min-width: 1061px)");
+
+    function estaAbierto() {
+        return menu.classList.contains("layout__aside--visible");
+    }
 
     function mostrarMenu(abierto) {
-        if (abierto) {
-            menu.classList.add("layout__aside--visible");
-        } else {
-            menu.classList.remove("layout__aside--visible");
-        }
-        iconoBarras.style.opacity = abierto ? 0 : 1;
-        iconoCerrar.style.opacity = abierto ? 1 : 0;
+        menu.classList.toggle("layout__aside--visible", abierto);
+        document.body.classList.toggle("menu-abierto", abierto);
+        boton.setAttribute("aria-expanded", abierto ? "true" : "false");
+        boton.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
     }
 
     boton.addEventListener("click", function () {
-        var estaAbierto = menu.classList.contains("layout__aside--visible");
-        mostrarMenu(!estaAbierto);
+        var abrir = !estaAbierto();
+        mostrarMenu(abrir);
+        if (abrir) {
+            menu.querySelector(".menu__link").focus({ preventScroll: true });
+        }
     });
 
-    // Si la ventana se hace grande, el menú se cierra
-    window.addEventListener("resize", function () {
-        if (document.body.clientWidth <= 1060) {
+    document.addEventListener("click", function (evento) {
+        var clicFuera = !menu.contains(evento.target) && !boton.contains(evento.target);
+        if (estaAbierto() && clicFuera) {
             mostrarMenu(false);
         }
     });
+
+    menu.addEventListener("click", function (evento) {
+        if (evento.target.closest("a")) {
+            mostrarMenu(false);
+        }
+    });
+
+    document.addEventListener("keydown", function (evento) {
+        if (evento.key === "Escape" && estaAbierto()) {
+            mostrarMenu(false);
+            boton.focus();
+        }
+    });
+
+    function alCambiarTamano(evento) {
+        if (evento.matches) {
+            mostrarMenu(false);
+        }
+    }
+
+    if (pantallaGrande.addEventListener) {
+        pantallaGrande.addEventListener("change", alCambiarTamano);
+    } else {
+        pantallaGrande.addListener(alCambiarTamano);
+    }
 }
 document.addEventListener("DOMContentLoaded", iniciarMenu);
